@@ -13,12 +13,13 @@ var shape_query = PhysicsShapeQueryParameters2D.new()
 #onready variables
 @onready var direction_pointer = $DirectionPointer
 @onready var collision_shape_2d = $CollisionShape2D
+@onready var animation_player = $AnimationPlayer
 
 func _ready():
 	shape_query.shape = collision_shape_2d.shape
-	#shape_query.collide_with_areas = false
-	#shape_query.collide_with_bodies = true
 	shape_query.collision_mask = 2
+	
+	animation_player.play("default")
 
 func _physics_process(delta):
 	get_input()

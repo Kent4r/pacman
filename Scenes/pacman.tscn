@@ -1,11 +1,35 @@
-[gd_scene load_steps=5 format=3 uid="uid://u1hpwcho4web"]
+[gd_scene load_steps=9 format=3 uid="uid://u1hpwcho4web"]
 
 [ext_resource type="Script" path="res://Scenes/pacman.gd" id="1_j521p"]
 [ext_resource type="Texture2D" uid="uid://h71ud3s8c8n3" path="res://Assets/Pacman/Pacman_02.png" id="2_dbibp"]
 [ext_resource type="Texture2D" uid="uid://c6bux70f56d6a" path="res://Assets/Pacman/direction_pointer.png" id="3_j1gyj"]
+[ext_resource type="Texture2D" uid="uid://bh35fl0wqe63" path="res://Assets/Pacman/Pacman_01.png" id="4_80v78"]
+[ext_resource type="Texture2D" uid="uid://dn5n35q1uw6no" path="res://Assets/Pacman/Pacman_03.png" id="5_qvb41"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fuecr"]
 size = Vector2(13, 13)
+
+[sub_resource type="Animation" id="Animation_lryqx"]
+resource_name = "default"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("4_80v78"), ExtResource("5_qvb41"), ExtResource("2_dbibp")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jkeij"]
+_data = {
+"default": SubResource("Animation_lryqx")
+}
 
 [node name="pacman" type="CharacterBody2D"]
 script = ExtResource("1_j521p")
@@ -13,7 +37,7 @@ script = ExtResource("1_j521p")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 scale = Vector2(-1, 1)
-texture = ExtResource("2_dbibp")
+texture = ExtResource("4_80v78")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_fuecr")
@@ -23,3 +47,8 @@ texture_filter = 1
 position = Vector2(-10, 0)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("3_j1gyj")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_jkeij")
+}
