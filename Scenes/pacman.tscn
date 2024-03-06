@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bh35fl0wqe63" path="res://Assets/Pacman/Pacman_01.png" id="4_80v78"]
 [ext_resource type="Texture2D" uid="uid://dn5n35q1uw6no" path="res://Assets/Pacman/Pacman_03.png" id="5_qvb41"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fuecr"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dn0sx"]
 size = Vector2(13, 13)
 
 [sub_resource type="Animation" id="Animation_lryqx"]
@@ -40,7 +40,7 @@ scale = Vector2(-1, 1)
 texture = ExtResource("4_80v78")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_fuecr")
+shape = SubResource("RectangleShape2D_dn0sx")
 
 [node name="DirectionPointer" type="Sprite2D" parent="."]
 texture_filter = 1

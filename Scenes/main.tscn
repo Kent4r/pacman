@@ -1,9 +1,10 @@
-[gd_scene load_steps=26 format=3 uid="uid://dfhob25e72cay"]
+[gd_scene load_steps=27 format=3 uid="uid://dfhob25e72cay"]
 
 [ext_resource type="Texture2D" uid="uid://di7lt8ehvdxdh" path="res://Assets/Walls/wall_atlas.png" id="1_6nwsu"]
 [ext_resource type="PackedScene" uid="uid://u1hpwcho4web" path="res://Scenes/pacman.tscn" id="2_cjmn5"]
 [ext_resource type="PackedScene" uid="uid://be488tc72vqhx" path="res://pellet.tscn" id="3_spaqi"]
 [ext_resource type="PackedScene" uid="uid://bjrt0oxmrnnec" path="res://connector.tscn" id="4_ju1x0"]
+[ext_resource type="PackedScene" uid="uid://cf6b8cj33v0w3" path="res://large_pellet.tscn" id="4_xnn41"]
 [ext_resource type="PackedScene" uid="uid://coijbptflr5h" path="res://connector_2.tscn" id="5_lhxaq"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_pbd6p"]
@@ -1452,9 +1453,6 @@ position = Vector2(181, -277)
 [node name="Pellet323" parent="Pellets" instance=ExtResource("3_spaqi")]
 position = Vector2(181, -254)
 
-[node name="Pellet72" parent="Pellets" instance=ExtResource("3_spaqi")]
-position = Vector2(-251, 299)
-
 [node name="Pellet154" parent="Pellets" instance=ExtResource("3_spaqi")]
 position = Vector2(-227, 227)
 
@@ -1646,6 +1644,9 @@ position = Vector2(-82, 155)
 
 [node name="Pellet48" parent="Pellets" instance=ExtResource("3_spaqi")]
 position = Vector2(-106, 155)
+
+[node name="Large_pellet" parent="Pellets" instance=ExtResource("4_xnn41")]
+position = Vector2(-252, 299)
 
 [node name="Connector" parent="." instance=ExtResource("4_ju1x0")]
 
