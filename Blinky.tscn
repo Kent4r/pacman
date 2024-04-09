@@ -1,0 +1,60 @@
+[gd_scene load_steps=5 format=3 uid="uid://y0bfsrpe1yf"]
+
+[ext_resource type="Texture2D" uid="uid://bwh3pnp6rcycn" path="res://Assets/Ghost/Ghost_Body_01.png" id="1_u08qc"]
+[ext_resource type="Texture2D" uid="uid://gcljnvys5tll" path="res://Assets/Ghost/Ghost_Eyes_Down.png" id="2_2wyse"]
+
+[sub_resource type="GDScript" id="GDScript_k481j"]
+script/source = "extends CharacterBody2D
+
+@export var speed = 150
+@export var target: Node2D
+@export var agent: NavigationAgent2D
+
+func _ready():
+	agent.path_desired_distance = 4.0
+	agent.target_desired_distance = 4.0
+	
+	call_deferred(\"actor_setup\")
+	
+func actor_setup():	
+	await get_tree().physics_frame
+	set_movement_target(target.position)
+	
+func set_movement_target(target: Vector2):
+	agent.target_position = target
+	
+	
+func _physics_process(delta):
+	if agent.is_navigation_finished():
+		return
+	var current_agent_position: Vector2 = global_position
+	var next_path_position: Vector2 = agent.get_next_path_position()
+	
+	var new_velocity: Vector2 = next_path_position - current_agent_position
+	new_velocity = new_velocity.normalized()
+	new_velocity = new_velocity * speed
+	
+	velocity = new_velocity
+	move_and_slide()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q1oys"]
+size = Vector2(14, 14)
+
+[node name="Blinky" type="CharacterBody2D" node_paths=PackedStringArray("agent")]
+script = SubResource("GDScript_k481j")
+agent = NodePath("NavigationAgent2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_q1oys")
+
+[node name="body" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_u08qc")
+
+[node name="eyes" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_2wyse")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+debug_enabled = true

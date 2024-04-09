@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4l5vnst7omqs"]
+
+[ext_resource type="Script" path="res://pinky.gd" id="1_jmn5t"]
+[ext_resource type="Texture2D" uid="uid://bwh3pnp6rcycn" path="res://Assets/Ghost/Ghost_Body_01.png" id="1_xtdhn"]
+[ext_resource type="Texture2D" uid="uid://gcljnvys5tll" path="res://Assets/Ghost/Ghost_Eyes_Down.png" id="2_vofxn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xwrxm"]
+size = Vector2(14, 14)
+
+[node name="Pinky" type="CharacterBody2D" node_paths=PackedStringArray("agent")]
+script = ExtResource("1_jmn5t")
+agent = NodePath("NavigationAgent2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xwrxm")
+
+[node name="body" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_xtdhn")
+
+[node name="eyes" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_vofxn")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+debug_enabled = true

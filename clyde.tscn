@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxbqaews3jrsv"]
+
+[ext_resource type="Texture2D" uid="uid://bwh3pnp6rcycn" path="res://Assets/Ghost/Ghost_Body_01.png" id="1_02cq1"]
+[ext_resource type="Script" path="res://clyde.gd" id="1_rbegm"]
+[ext_resource type="Texture2D" uid="uid://gcljnvys5tll" path="res://Assets/Ghost/Ghost_Eyes_Down.png" id="2_a5igc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bnrlr"]
+size = Vector2(14, 14)
+
+[node name="Clyde" type="CharacterBody2D" node_paths=PackedStringArray("agent")]
+script = ExtResource("1_rbegm")
+agent = NodePath("NavigationAgent2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_bnrlr")
+
+[node name="body" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_02cq1")
+
+[node name="eyes" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_a5igc")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+debug_enabled = true

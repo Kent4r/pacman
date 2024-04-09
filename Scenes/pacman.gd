@@ -8,7 +8,7 @@ var movement_direction = Vector2.ZERO
 var shape_query = PhysicsShapeQueryParameters2D.new()
 
 #export variables
-@export var speed = 300
+@export var speed = 150
 
 #onready variables
 @onready var direction_pointer = $DirectionPointer

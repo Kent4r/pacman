@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://be488tc72vqhx"]
 
-[ext_resource type="Script" path="res://pellet.gd" id="1_2jdx6"]
+[ext_resource type="Script" path="res://Scenes/pellet.gd" id="1_2jdx6"]
 [ext_resource type="Texture2D" uid="uid://b8j4ua603t5i5" path="res://Assets/Pellet/Pellet_Medium.png" id="1_lsmbk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cegag"]
