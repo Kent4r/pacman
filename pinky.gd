@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var speed = 150
 @export var target: Node2D
 @export var agent: NavigationAgent2D
+@export var color: Color
 
 func _ready():
 	agent.path_desired_distance = 4.0
