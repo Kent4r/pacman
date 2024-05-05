@@ -1,6 +1,8 @@
 extends Sprite2D
 
-@onready var blinky = $".."
+@onready var animation_player = $"../AnimationPlayer"
+@onready var ghost = $".."
 
 func _ready():
-	self.modulate = blinky.color
+	self.modulate = ghost.color
+	animation_player.play("moving")

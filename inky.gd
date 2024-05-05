@@ -1,5 +1,9 @@
 extends CharacterBody2D
 
+signal direction_change(current_direction: String)
+
+var direction = null
+
 @export var speed = 150
 @export var target: Node2D
 @export var agent: NavigationAgent2D
@@ -29,5 +33,17 @@ func _physics_process(delta):
 	new_velocity = new_velocity.normalized()
 	new_velocity = new_velocity * speed
 	
+	calculate_direction(new_velocity)
 	velocity = new_velocity
 	move_and_slide()
+
+func calculate_direction(velocity: Vector2):
+	var current_direction
+	if velocity.y < -1.5: current_direction = "up"
+	elif velocity.y > 1.5: current_direction = "down"
+	elif velocity.x < -1.5: current_direction = "left"
+	elif velocity.x > 1.5: current_direction = "right"
+	
+	if current_direction != direction:
+		direction = current_direction
+		direction_change.emit(direction)
