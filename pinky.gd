@@ -39,10 +39,10 @@ func _physics_process(delta):
 
 func calculate_direction(velocity: Vector2):
 	var current_direction
-	if velocity.y < -1.5: current_direction = "up"
-	elif velocity.y > 1.5: current_direction = "down"
-	elif velocity.x < -1.5: current_direction = "left"
-	elif velocity.x > 1.5: current_direction = "right"
+	if velocity.y < (-speed+10): current_direction = "up"
+	elif velocity.y > (speed-10): current_direction = "down"
+	elif velocity.x < (-speed+10): current_direction = "left"
+	elif velocity.x > (speed-10): current_direction = "right"
 	
 	if current_direction != direction:
 		direction = current_direction
