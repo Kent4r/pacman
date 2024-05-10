@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://y0bfsrpe1yf"]
+[gd_scene load_steps=19 format=3 uid="uid://y0bfsrpe1yf"]
 
 [ext_resource type="Texture2D" uid="uid://bwh3pnp6rcycn" path="res://Assets/Ghost/Ghost_Body_01.png" id="1_u08qc"]
 [ext_resource type="Texture2D" uid="uid://gcljnvys5tll" path="res://Assets/Ghost/Ghost_Eyes_Down.png" id="2_2wyse"]
@@ -8,36 +8,62 @@
 [ext_resource type="Texture2D" uid="uid://dcgg14tac7mou" path="res://Assets/Ghost/Ghost_Eyes_Up.png" id="5_axt3f"]
 [ext_resource type="Texture2D" uid="uid://cvgpjfpg6poi1" path="res://Assets/Ghost/Ghost_Eyes_Left.png" id="6_53ccm"]
 [ext_resource type="Texture2D" uid="uid://dw3xx2kpcbjrs" path="res://Assets/Ghost/Ghost_Eyes_Right.png" id="7_3hq1r"]
+[ext_resource type="Texture2D" uid="uid://bd4p43ndtu2v8" path="res://Assets/Ghost/Ghost_Vulnerable_Blue_01.png" id="9_elu5b"]
+[ext_resource type="Texture2D" uid="uid://blq70pt5we2b8" path="res://Assets/Ghost/Ghost_Vulnerable_Blue_02.png" id="10_imni4"]
+[ext_resource type="Texture2D" uid="uid://d0uu218xbjg0r" path="res://Assets/Ghost/Ghost_Vulnerable_White_02.png" id="11_2p4am"]
+[ext_resource type="Texture2D" uid="uid://cvto5sswde2ik" path="res://Assets/Ghost/Ghost_Vulnerable_White_01.png" id="12_3st6u"]
 
 [sub_resource type="GDScript" id="GDScript_k481j"]
 script/source = "extends CharacterBody2D
 
+enum GhostState{SCATTER, CHASE, RUN_AWAY}
+
 signal direction_change(current_direction: String)
 
 var direction = null
+var current_state: GhostState
+var scatter_index: int = -1
 
 @export var speed = 150
-@export var target: Node2D
+@export var target_array: Array[Marker2D]
+@export var tile_map: MazeTileMap
 @export var agent: NavigationAgent2D
 @export var color: Color
+
+@onready var pacman = $\"../../../pacman\"
+@onready var scatter_timer = $ScatterTime
+@onready var update_chasing_target_position_timer = $UpdateChasingTargetPositionTimer
+@onready var run_away_timer = $RunAwayTimer
+@onready var recover_from_run_away = $RecoverFromRunAway
+@onready var body = $body
+@onready var eyes = $eyes
 
 func _ready():
 	agent.path_desired_distance = 4.0
 	agent.target_desired_distance = 4.0
+	#agent.target_reached.connect(on_position_reached)
+	
+	#update_chasing_target_position_timer.start()
+	scatter_timer.start()
+	current_state = GhostState.SCATTER
 	
 	call_deferred(\"actor_setup\")
 	
 func actor_setup():	
 	await get_tree().physics_frame
-	set_movement_target(target.position)
+	set_movement_target(target_array[scatter_index].position)
 	
 func set_movement_target(target: Vector2):
 	agent.target_position = target
 	
 	
 func _physics_process(delta):
-	if agent.is_navigation_finished():
-		return
+	if agent.is_navigation_finished() and current_state == GhostState.SCATTER:
+		set_movement_target(target_array[scatter_index].position)
+		if scatter_index >= (target_array.size()-1): scatter_index = 0
+		else: scatter_index += 1
+	elif agent.is_navigation_finished() and current_state == GhostState.RUN_AWAY: run_away_path()
+	elif agent.is_navigation_finished() and current_state == GhostState.CHASE: return
 	var current_agent_position: Vector2 = global_position
 	var next_path_position: Vector2 = agent.get_next_path_position()
 	
@@ -59,6 +85,41 @@ func calculate_direction(velocity: Vector2):
 	if current_direction != direction:
 		direction = current_direction
 		direction_change.emit(direction)
+
+
+func _on_scatter_time_timeout():
+	update_chasing_target_position_timer.start()
+	current_state = GhostState.CHASE
+
+func _on_update_chasing_target_position_timer_timeout():
+	agent.target_position = pacman.position
+
+func run_away():
+	current_state = GhostState.RUN_AWAY
+	
+	body.run_away()
+	eyes.hide()
+	
+	run_away_timer.start()
+	recover_from_run_away.stop()
+	scatter_timer.stop()
+	update_chasing_target_position_timer.stop()
+	
+	run_away_path()
+
+func run_away_path():
+	var empty_cell_position = tile_map.get_random_empry_cell_position()
+	agent.target_position = empty_cell_position
+
+func _on_run_away_timer_timeout():
+	body.recover_from_run_away()
+	recover_from_run_away.start()
+
+func _on_recover_from_run_away_timeout():
+	current_state = GhostState.CHASE
+	update_chasing_target_position_timer.start()
+	eyes.show()
+	body.move()
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q1oys"]
@@ -81,12 +142,49 @@ tracks/0/keys = {
 "values": [ExtResource("1_u08qc"), ExtResource("4_btsxe")]
 }
 
+[sub_resource type="Animation" id="Animation_e78kq"]
+resource_name = "running_away"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("body:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("9_elu5b"), ExtResource("10_imni4")]
+}
+
+[sub_resource type="Animation" id="Animation_pau6j"]
+resource_name = "recover_from_run_away"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("body:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("9_elu5b"), ExtResource("11_2p4am"), ExtResource("10_imni4"), ExtResource("12_3st6u")]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_d53b8"]
 _data = {
-"moving": SubResource("Animation_yhia2")
+"moving": SubResource("Animation_yhia2"),
+"recover_from_run_away": SubResource("Animation_pau6j"),
+"running_away": SubResource("Animation_e78kq")
 }
 
 [node name="Blinky" type="CharacterBody2D" node_paths=PackedStringArray("agent")]
+collision_layer = 2
+collision_mask = 0
 script = SubResource("GDScript_k481j")
 agent = NodePath("NavigationAgent2D")
 color = Color(1, 0, 0, 1)
@@ -96,7 +194,7 @@ shape = SubResource("RectangleShape2D_q1oys")
 
 [node name="body" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("4_btsxe")
+texture = ExtResource("12_3st6u")
 script = ExtResource("2_n5vur")
 
 [node name="eyes" type="Sprite2D" parent="."]
@@ -114,3 +212,23 @@ right = ExtResource("7_3hq1r")
 libraries = {
 "": SubResource("AnimationLibrary_d53b8")
 }
+
+[node name="ScatterTime" type="Timer" parent="."]
+wait_time = 8.0
+one_shot = true
+
+[node name="UpdateChasingTargetPositionTimer" type="Timer" parent="."]
+wait_time = 0.2
+
+[node name="RunAwayTimer" type="Timer" parent="."]
+wait_time = 8.0
+one_shot = true
+
+[node name="RecoverFromRunAway" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="ScatterTime" to="." method="_on_scatter_time_timeout"]
+[connection signal="timeout" from="UpdateChasingTargetPositionTimer" to="." method="_on_update_chasing_target_position_timer_timeout"]
+[connection signal="timeout" from="RunAwayTimer" to="." method="_on_run_away_timer_timeout"]
+[connection signal="timeout" from="RecoverFromRunAway" to="." method="_on_recover_from_run_away_timeout"]

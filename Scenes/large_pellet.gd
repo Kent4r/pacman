@@ -1,11 +1,14 @@
 extends Area2D
 
+class_name Large_Pellet
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+signal pellet_eaten(should_allow_eating_ghosts: bool)
+
+@export var should_allow_eating_ghosts = true
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+
+func _on_body_entered(body):
+	if body is Player:
+		pellet_eaten.emit(should_allow_eating_ghosts)
+		queue_free()
