@@ -1861,12 +1861,15 @@ target_array = [NodePath("../red1"), NodePath("../red2"), NodePath("../red3")]
 tile_map = NodePath("../../../TileMap")
 
 [node name="red1" type="Marker2D" parent="Ghosts/red"]
+visible = false
 position = Vector2(-299, -229)
 
 [node name="red2" type="Marker2D" parent="Ghosts/red"]
+visible = false
 position = Vector2(-299, -85)
 
 [node name="red3" type="Marker2D" parent="Ghosts/red"]
+visible = false
 position = Vector2(-107, -157)
 
 [node name="pink" type="Node" parent="Ghosts"]
@@ -1876,12 +1879,16 @@ position = Vector2(-47, 25)
 scale = Vector2(3, 3)
 collision_layer = 16
 collision_mask = 2
-target_array = [NodePath("../red2")]
+target_array = [NodePath("../pink1"), NodePath("../pink2")]
 tile_map = NodePath("../../../TileMap")
 
-[node name="red2" type="Marker2D" parent="Ghosts/pink"]
+[node name="pink1" type="Marker2D" parent="Ghosts/pink"]
 visible = false
-position = Vector2(-11, -301)
+position = Vector2(-47, 25)
+
+[node name="pink2" type="Marker2D" parent="Ghosts/pink"]
+visible = false
+position = Vector2(-47, -7)
 
 [node name="cyan" type="Node" parent="Ghosts"]
 
@@ -1890,12 +1897,20 @@ position = Vector2(0, -2)
 scale = Vector2(3, 3)
 collision_layer = 16
 collision_mask = 2
-target_array = [NodePath("../red3")]
+target_array = [NodePath("../cyan1"), NodePath("../cyan2"), NodePath("../cyan3")]
 tile_map = NodePath("../../../TileMap")
 
-[node name="red3" type="Marker2D" parent="Ghosts/cyan"]
+[node name="cyan1" type="Marker2D" parent="Ghosts/cyan"]
 visible = false
-position = Vector2(13, -301)
+position = Vector2(109, -301)
+
+[node name="cyan2" type="Marker2D" parent="Ghosts/cyan"]
+visible = false
+position = Vector2(-107, -301)
+
+[node name="cyan3" type="Marker2D" parent="Ghosts/cyan"]
+visible = false
+position = Vector2(0, -133)
 
 [node name="orange" type="Node" parent="Ghosts"]
 
@@ -1904,9 +1919,13 @@ position = Vector2(49, 25)
 scale = Vector2(3, 3)
 collision_layer = 16
 collision_mask = 2
-target_array = [NodePath("../red4")]
+target_array = [NodePath("../orange1"), NodePath("../orange2")]
 tile_map = NodePath("../../../TileMap")
 
-[node name="red4" type="Marker2D" parent="Ghosts/orange"]
+[node name="orange1" type="Marker2D" parent="Ghosts/orange"]
 visible = false
-position = Vector2(301, -205)
+position = Vector2(49, 25)
+
+[node name="orange2" type="Marker2D" parent="Ghosts/orange"]
+visible = false
+position = Vector2(49, -7)

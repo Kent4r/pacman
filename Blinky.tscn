@@ -194,7 +194,7 @@ shape = SubResource("RectangleShape2D_q1oys")
 
 [node name="body" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("12_3st6u")
+texture = ExtResource("4_btsxe")
 script = ExtResource("2_n5vur")
 
 [node name="eyes" type="Sprite2D" parent="."]
