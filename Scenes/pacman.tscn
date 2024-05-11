@@ -1,10 +1,21 @@
-[gd_scene load_steps=9 format=3 uid="uid://u1hpwcho4web"]
+[gd_scene load_steps=21 format=3 uid="uid://u1hpwcho4web"]
 
 [ext_resource type="Script" path="res://Scenes/pacman.gd" id="1_j521p"]
 [ext_resource type="Texture2D" uid="uid://h71ud3s8c8n3" path="res://Assets/Pacman/Pacman_02.png" id="2_dbibp"]
+[ext_resource type="Texture2D" uid="uid://bbgj23q7gam4f" path="res://Assets/Pacman/Pacman_Death_01.png" id="2_jlrcm"]
 [ext_resource type="Texture2D" uid="uid://c6bux70f56d6a" path="res://Assets/Pacman/direction_pointer.png" id="3_j1gyj"]
 [ext_resource type="Texture2D" uid="uid://bh35fl0wqe63" path="res://Assets/Pacman/Pacman_01.png" id="4_80v78"]
 [ext_resource type="Texture2D" uid="uid://dn5n35q1uw6no" path="res://Assets/Pacman/Pacman_03.png" id="5_qvb41"]
+[ext_resource type="Texture2D" uid="uid://vxf8adm234y3" path="res://Assets/Pacman/Pacman_Death_02.png" id="7_x087h"]
+[ext_resource type="Texture2D" uid="uid://coy4joj7785kn" path="res://Assets/Pacman/Pacman_Death_03.png" id="8_aq8qp"]
+[ext_resource type="Texture2D" uid="uid://dc32pr4l0exr7" path="res://Assets/Pacman/Pacman_Death_04.png" id="9_kk5l3"]
+[ext_resource type="Texture2D" uid="uid://bghyra350hdga" path="res://Assets/Pacman/Pacman_Death_05.png" id="10_gje0v"]
+[ext_resource type="Texture2D" uid="uid://bs55ta550rsj3" path="res://Assets/Pacman/Pacman_Death_06.png" id="11_utkyd"]
+[ext_resource type="Texture2D" uid="uid://c3dh7n3hysm7o" path="res://Assets/Pacman/Pacman_Death_07.png" id="12_8jojv"]
+[ext_resource type="Texture2D" uid="uid://d30tk7uppyp8r" path="res://Assets/Pacman/Pacman_Death_08.png" id="13_cynnr"]
+[ext_resource type="Texture2D" uid="uid://bm2447s8rp6kl" path="res://Assets/Pacman/Pacman_Death_09.png" id="14_cnje2"]
+[ext_resource type="Texture2D" uid="uid://malqtxrid8h4" path="res://Assets/Pacman/Pacman_Death_10.png" id="15_5vpd0"]
+[ext_resource type="Texture2D" uid="uid://2xj6ip5thdc6" path="res://Assets/Pacman/Pacman_Death_11.png" id="16_4pftf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dn0sx"]
 size = Vector2(13, 13)
@@ -26,24 +37,43 @@ tracks/0/keys = {
 "values": [ExtResource("4_80v78"), ExtResource("5_qvb41"), ExtResource("2_dbibp")]
 }
 
+[sub_resource type="Animation" id="Animation_5wm53"]
+resource_name = "death"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.3, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("2_jlrcm"), ExtResource("7_x087h"), ExtResource("8_aq8qp"), ExtResource("9_kk5l3"), ExtResource("10_gje0v"), ExtResource("11_utkyd"), ExtResource("12_8jojv"), ExtResource("13_cynnr"), ExtResource("14_cnje2"), ExtResource("15_5vpd0"), ExtResource("16_4pftf")]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jkeij"]
 _data = {
+"death": SubResource("Animation_5wm53"),
 "default": SubResource("Animation_lryqx")
 }
 
 [node name="pacman" type="CharacterBody2D"]
-collision_mask = 30
+collision_mask = 14
 script = ExtResource("1_j521p")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 scale = Vector2(-1, 1)
-texture = ExtResource("5_qvb41")
+texture = ExtResource("2_jlrcm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_dn0sx")
 
 [node name="DirectionPointer" type="Sprite2D" parent="."]
+visible = false
 texture_filter = 1
 position = Vector2(-10, 0)
 scale = Vector2(0.2, 0.2)
@@ -53,3 +83,5 @@ texture = ExtResource("3_j1gyj")
 libraries = {
 "": SubResource("AnimationLibrary_jkeij")
 }
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cxbqaews3jrsv"]
+[gd_scene load_steps=21 format=3 uid="uid://cxbqaews3jrsv"]
 
 [ext_resource type="Texture2D" uid="uid://bwh3pnp6rcycn" path="res://Assets/Ghost/Ghost_Body_01.png" id="1_02cq1"]
 [ext_resource type="Script" path="res://clyde.gd" id="1_rbegm"]
@@ -13,6 +13,10 @@
 [ext_resource type="Texture2D" uid="uid://blq70pt5we2b8" path="res://Assets/Ghost/Ghost_Vulnerable_Blue_02.png" id="11_rnah5"]
 [ext_resource type="Texture2D" uid="uid://d0uu218xbjg0r" path="res://Assets/Ghost/Ghost_Vulnerable_White_02.png" id="12_xiwfm"]
 [ext_resource type="Texture2D" uid="uid://cvto5sswde2ik" path="res://Assets/Ghost/Ghost_Vulnerable_White_01.png" id="13_vhcfu"]
+[ext_resource type="Theme" uid="uid://be45544wwm4lc" path="res://Scenes/label_theme.tres" id="14_6thv3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eh8rq"]
+size = Vector2(14, 14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bnrlr"]
 size = Vector2(14, 14)
@@ -79,7 +83,13 @@ script = ExtResource("1_rbegm")
 agent = NodePath("NavigationAgent2D")
 color = Color(1, 0.647059, 0, 1)
 
+[node name="CollosionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollosionArea"]
+shape = SubResource("RectangleShape2D_eh8rq")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_bnrlr")
 
 [node name="body" type="Sprite2D" parent="."]
@@ -118,7 +128,26 @@ one_shot = true
 wait_time = 2.0
 one_shot = true
 
+[node name="AtHomeTimer" type="Timer" parent="."]
+wait_time = 8.0
+one_shot = true
+
+[node name="PointsLabel" type="Label" parent="."]
+visible = false
+texture_filter = 1
+offset_left = -16.0
+offset_top = -20.0
+offset_right = 18.0
+offset_bottom = -4.0
+theme = ExtResource("14_6thv3")
+theme_override_font_sizes/font_size = 12
+text = "200"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="body_entered" from="CollosionArea" to="." method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="ScatterTime" to="." method="_on_scatter_time_timeout"]
 [connection signal="timeout" from="UpdateChasingTargetPositionTimer" to="." method="_on_update_chasing_target_position_timer_timeout"]
 [connection signal="timeout" from="RunAwayTimer" to="." method="_on_run_away_timer_timeout"]
 [connection signal="timeout" from="RecoverFromRunAway" to="." method="_on_recover_from_run_away_timeout"]
+[connection signal="timeout" from="AtHomeTimer" to="." method="_on_at_home_timer_timeout"]

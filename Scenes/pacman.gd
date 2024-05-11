@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 class_name Player
 
+signal player_died
+
 #variables
 var next_movement_direction = Vector2.ZERO
 var movement_direction = Vector2.ZERO
@@ -9,6 +11,8 @@ var shape_query = PhysicsShapeQueryParameters2D.new()
 
 #export variables
 @export var speed = 150
+@export var start: Marker2D
+@export var lifes: int = 3
 
 #onready variables
 @onready var direction_pointer = $DirectionPointer
@@ -19,7 +23,19 @@ func _ready():
 	shape_query.shape = collision_shape_2d.shape
 	shape_query.collision_mask = 2
 	
+	reset_player()
+	
+	
 	animation_player.play("default")
+
+func reset_player():
+	lifes-=1
+	animation_player.play("default")
+	position = start.position
+	set_physics_process(true)
+	get_tree().create_timer(0.1).timeout.connect(reset_collision)
+
+func reset_collision(): set_collision_layer_value(1, true)
 
 func _physics_process(delta):
 	get_input()
@@ -53,5 +69,15 @@ func can_move_in_direction(dir: Vector2, delta: float) -> bool:
 	shape_query.transform = global_transform.translated(dir * speed * delta * 2)
 	var result = get_world_2d().direct_space_state.intersect_shape(shape_query)
 	return result.size() == 0
-	
-	
+
+func die():
+	set_collision_layer_value(1, false)
+	animation_player.play("death")
+	set_physics_process(false)
+
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == "death":
+		if lifes>0:
+			player_died.emit()
+			reset_player()
+		else: pass #TODO "Game Lost!"

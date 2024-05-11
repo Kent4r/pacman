@@ -8,6 +8,7 @@ var pellets_eaten = 0
 @onready var pinky = $"../Ghosts/pink/Pinky"
 @onready var inky = $"../Ghosts/cyan/Inky"
 @onready var clyde = $"../Ghosts/orange/Clyde"
+@onready var points_manager = $"../PointsManager"
 
 func _ready():
 	var pellets = self.get_children() as Array[Pellet]
@@ -20,6 +21,7 @@ func on_pellet_eaten(should_allow_eating_ghosts: bool):
 	pellets_eaten += 1
 	
 	if should_allow_eating_ghosts:
+		get_tree().create_timer(10).timeout.connect(reset_points_for_ghost)
 		blinky.run_away()
 		pinky.run_away()
 		inky.run_away()
@@ -27,3 +29,6 @@ func on_pellet_eaten(should_allow_eating_ghosts: bool):
 	
 	if pellets_eaten == total_pellets_count:
 		ui.game_won()
+
+func reset_points_for_ghost():
+	points_manager.reset_points_for_ghost()

@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://d32gtvqu4mr5h"]
+[gd_scene load_steps=4 format=3 uid="uid://d32gtvqu4mr5h"]
 
 [ext_resource type="Script" path="res://Scenes/ui.gd" id="1_bwpbx"]
-[ext_resource type="FontFile" uid="uid://ccnln6n4c0g54" path="res://Assets/Fonts/upheavtt.ttf" id="1_i6equ"]
+[ext_resource type="Theme" uid="uid://be45544wwm4lc" path="res://Scenes/label_theme.tres" id="2_7a2ac"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cbyed"]
 bg_color = Color(0, 0, 0, 1)
@@ -14,10 +14,6 @@ corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
-
-[sub_resource type="Theme" id="Theme_p2cub"]
-default_font = ExtResource("1_i6equ")
-default_font_size = 40
 
 [node name="CanvasLayer" type="CanvasLayer"]
 script = ExtResource("1_bwpbx")
@@ -56,7 +52,7 @@ offset_right = 20.0
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_p2cub")
+theme = ExtResource("2_7a2ac")
 text = "YOU WON!"
 horizontal_alignment = 1
 vertical_alignment = 1
