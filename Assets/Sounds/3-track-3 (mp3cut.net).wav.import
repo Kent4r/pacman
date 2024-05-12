@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cpd3xcylhdrvy"
+path="res://.godot/imported/3-track-3 (mp3cut.net).wav-e313109fa00e8cd8ea60d9e48beaa861.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/3-track-3 (mp3cut.net).wav"
+dest_files=["res://.godot/imported/3-track-3 (mp3cut.net).wav-e313109fa00e8cd8ea60d9e48beaa861.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

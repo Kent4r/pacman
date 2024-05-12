@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://dfhob25e72cay"]
+[gd_scene load_steps=47 format=3 uid="uid://dfhob25e72cay"]
 
 [ext_resource type="Texture2D" uid="uid://di7lt8ehvdxdh" path="res://Assets/Walls/wall_atlas.png" id="1_6nwsu"]
 [ext_resource type="Script" path="res://Scenes/TileMap.gd" id="2_2dnlp"]
@@ -20,6 +20,7 @@
 [ext_resource type="AudioStream" uid="uid://100ohtpyo02o" path="res://Assets/Sounds/pacman_eatghost.wav" id="18_mubk6"]
 [ext_resource type="AudioStream" uid="uid://c4b0pvuyylv4a" path="res://Assets/Sounds/pacman_power_pellet.wav" id="19_sse0b"]
 [ext_resource type="AudioStream" uid="uid://bnxugtt2eriq0" path="res://Assets/Sounds/pacman_death.wav" id="20_1dr35"]
+[ext_resource type="AudioStream" uid="uid://cpd3xcylhdrvy" path="res://Assets/Sounds/3-track-3 (mp3cut.net).wav" id="21_2inbn"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_pbd6p"]
 tile_data = PackedInt32Array(0, 65536, 3, 65536, 65536, 3, 131072, 65536, 3, 196608, 458752, 2, 524288, 131072, 3, 655360, 131072, 0, 720896, 458752, 3, 786432, 65536, 3, 851968, 65536, 3, 917504, 65536, 3, 983040, 65536, 3, 1048576, 458752, 2, 196609, 196608, 3, 524289, 131072, 3, 655361, 131072, 0, 720897, 196608, 0, 1048577, 196608, 3, 2, 458752, 0, 65538, 65536, 1, 196610, 393216, 1, 262146, 65536, 3, 327682, 65536, 3, 393218, 65536, 3, 458754, 65536, 3, 524290, 0, 2, 655362, 393216, 0, 720898, 0, 1, 851970, 458752, 0, 917506, 65536, 1, 1048578, 196608, 3, 3, 131072, 0, 65539, 196608, 0, 851971, 131072, 0, 917507, 196608, 0, 1048579, 196608, 3, 4, 131072, 0, 65540, 196608, 1, 131076, 327680, 0, 196612, 327680, 0, 262148, 327680, 0, 327684, 65536, 1, 458756, 458752, 0, 524292, 65536, 1, 720900, 458752, 0, 786436, 327680, 0, 851972, 131072, 1, 917508, 196608, 0, 1048580, 196608, 3, 5, 393216, 0, 65541, 262144, 0, 131077, 262144, 0, 196613, 262144, 0, 262149, 262144, 0, 327685, 0, 1, 458757, 131072, 0, 524293, 196608, 0, 720901, 393216, 0, 786437, 262144, 0, 851973, 262144, 0, 917509, 0, 1, 1048581, 196608, 3, 458758, 131072, 0, 524294, 196608, 0, 1048582, 196608, 3, 7, 65536, 1, 131079, 458752, 0, 196615, 327680, 0, 262151, 327680, 0, 327687, 65536, 1, 458759, 131072, 0, 524295, 196608, 1, 589831, 327680, 0, 655367, 327680, 0, 720903, 65536, 1, 851975, 458752, 0, 917511, 65536, 1, 1048583, 196608, 3, 8, 0, 1, 131080, 393216, 0, 196616, 262144, 0, 262152, 262144, 1, 327688, 196608, 0, 458760, 131072, 0, 524296, 327680, 1, 589832, 262144, 0, 655368, 262144, 0, 720904, 0, 1, 851976, 131072, 0, 917512, 196608, 0, 1048584, 196608, 3, 262153, 131072, 0, 327689, 196608, 0, 458761, 131072, 0, 524297, 196608, 0, 851977, 131072, 0, 917513, 196608, 0, 1048585, 196608, 3, 10, 0, 3, 65546, 0, 3, 131082, 65536, 2, 262154, 393216, 0, 327690, 0, 1, 458762, 393216, 0, 524298, 0, 1, 655370, 458752, 0, 720906, 65536, 1, 851978, 131072, 0, 917514, 196608, 0, 1048586, 196608, 3, 131083, 131072, 3, 655371, 131072, 0, 720907, 196608, 0, 851979, 393216, 0, 917515, 0, 1, 1048587, 196608, 3, 131084, 131072, 3, 262156, 458752, 0, 327692, 327680, 0, 393228, 327680, 0, 458764, 327680, 0, 524300, 65536, 1, 655372, 131072, 0, 720908, 196608, 0, 1048588, 196608, 3, 131085, 131072, 3, 262157, 131072, 0, 327693, 196608, 2, 393229, 196608, 2, 458765, 196608, 2, 524301, 196608, 0, 655373, 131072, 0, 720909, 196608, 1, 786445, 327680, 0, 851981, 327680, 0, 917517, 65536, 1, 1048589, 196608, 3)
@@ -2080,15 +2081,26 @@ position = Vector2(0, 229)
 [node name="ChompSP" type="AudioStreamPlayer2D" parent="SoundPlayers"]
 visible = false
 stream = ExtResource("17_7ubmu")
+volume_db = -15.0
 
 [node name="EatGhostSP" type="AudioStreamPlayer2D" parent="SoundPlayers"]
 visible = false
 stream = ExtResource("18_mubk6")
+volume_db = -15.0
 
 [node name="PowerPelletSP" type="AudioStreamPlayer2D" parent="SoundPlayers"]
 visible = false
 stream = ExtResource("19_sse0b")
+volume_db = -15.0
 
 [node name="PacmanDeathSP" type="AudioStreamPlayer2D" parent="SoundPlayers"]
 visible = false
 stream = ExtResource("20_1dr35")
+volume_db = -15.0
+
+[node name="BGTrackSP" type="AudioStreamPlayer2D" parent="SoundPlayers"]
+visible = false
+stream = ExtResource("21_2inbn")
+volume_db = -25.0
+pitch_scale = 0.75
+autoplay = true
