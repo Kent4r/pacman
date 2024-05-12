@@ -64,21 +64,24 @@ func _physics_process(delta):
 		
 	velocity = movement_direction * speed * speed_multiplier
 	move_and_slide()
-	
+	if movement_direction == Vector2.LEFT:
+		rotation_degrees = 0
+	elif movement_direction == Vector2.RIGHT:
+		rotation_degrees = 180
+	elif movement_direction == Vector2.DOWN:
+		rotation_degrees = -90
+	elif movement_direction == Vector2.UP:
+		rotation_degrees = 90
+
 func get_input():
-	
 	if Input.is_action_pressed("left"):
 		next_movement_direction = Vector2.LEFT
-		rotation_degrees = 0
 	elif Input.is_action_pressed("right"):
 		next_movement_direction = Vector2.RIGHT
-		rotation_degrees = 180
 	elif Input.is_action_pressed("down"):
 		next_movement_direction = Vector2.DOWN
-		rotation_degrees = -90
 	elif Input.is_action_pressed("up"):
 		next_movement_direction = Vector2.UP
-		rotation_degrees = 90
 	elif Input.is_action_pressed("stop"):
 		next_movement_direction = Vector2.ZERO
 
