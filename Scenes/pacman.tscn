@@ -20,6 +20,22 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dn0sx"]
 size = Vector2(13, 13)
 
+[sub_resource type="Animation" id="Animation_5wm53"]
+resource_name = "death"
+length = 2.75
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("2_jlrcm"), ExtResource("7_x087h"), ExtResource("8_aq8qp"), ExtResource("9_kk5l3"), ExtResource("10_gje0v"), ExtResource("11_utkyd"), ExtResource("12_8jojv"), ExtResource("13_cynnr"), ExtResource("14_cnje2"), ExtResource("15_5vpd0"), ExtResource("16_4pftf"), ExtResource("16_4pftf")]
+}
+
 [sub_resource type="Animation" id="Animation_lryqx"]
 resource_name = "default"
 length = 0.6
@@ -35,22 +51,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [ExtResource("4_80v78"), ExtResource("5_qvb41"), ExtResource("2_dbibp")]
-}
-
-[sub_resource type="Animation" id="Animation_5wm53"]
-resource_name = "death"
-length = 2.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.3, 2.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [ExtResource("2_jlrcm"), ExtResource("7_x087h"), ExtResource("8_aq8qp"), ExtResource("9_kk5l3"), ExtResource("10_gje0v"), ExtResource("11_utkyd"), ExtResource("12_8jojv"), ExtResource("13_cynnr"), ExtResource("14_cnje2"), ExtResource("15_5vpd0"), ExtResource("16_4pftf")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jkeij"]

@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-enum GhostState{SCATTER, CHASE, RUN_AWAY, EATEN, START_HOME, BIT_SCARED}
+enum GhostState{SCATTER, CHASE, RUN_AWAY, EATEN, START_HOME, BIT_SCARED, BEATEN}
 
 signal direction_change(current_direction: String)
 
@@ -30,15 +30,22 @@ var home_index: int = 0
 @onready var eyes = $eyes
 @onready var points_label = $PointsLabel
 @onready var at_home_timer = $AtHomeTimer
+@onready var eat_ghost_sp = $"../../../SoundPlayers/EatGhostSP"
+
+func IS_SCARED(): return true if (current_state == GhostState.RUN_AWAY or current_state == GhostState.BIT_SCARED) else false
 
 func _ready():
+	current_state = GhostState.RUN_AWAY
 	position = start.position
 	scatter_timer.stop()
 	update_chasing_target_position_timer.stop()
 	run_away_timer.stop()
 	recover_from_run_away.stop()
 	at_home_timer.stop()
+	scatter_index = 0
+	home_index = 0
 	body.move()
+	body.show()
 	eyes.show()
 	agent.path_desired_distance = 4.0
 	agent.target_desired_distance = 4.0
@@ -50,6 +57,16 @@ func _ready():
 		scatter_timer.start()
 		current_state = GhostState.SCATTER
 		call_deferred("actor_setup")
+
+func hide_from_UI():
+	body.hide()
+	eyes.hide()
+	current_state = GhostState.BEATEN
+	scatter_timer.stop()
+	update_chasing_target_position_timer.stop()
+	run_away_timer.stop()
+	recover_from_run_away.stop()
+	at_home_timer.stop()
 
 func scatter():
 	scatter_timer.start()
@@ -86,6 +103,7 @@ func _physics_process(delta):
 	elif agent.is_navigation_finished() and current_state == GhostState.EATEN: start_chasing_pacman()
 	elif agent.is_navigation_finished() and current_state == GhostState.START_HOME: move_to_next_home_pos()
 	elif agent.is_navigation_finished() and current_state == GhostState.BIT_SCARED: move_to_next_home_pos()
+	elif current_state == GhostState.BEATEN: return
 	var current_agent_position: Vector2 = global_position
 	var next_path_position: Vector2 = agent.get_next_path_position()
 	
@@ -158,12 +176,15 @@ func _on_run_away_timer_timeout():
 	recover_from_run_away.start()
 
 func _on_recover_from_run_away_timeout():
-	current_state = GhostState.CHASE
-	update_chasing_target_position_timer.start()
-	eyes.show()
-	body.move()
+	if current_state == GhostState.EATEN: pass
+	else:
+		current_state = GhostState.CHASE
+		update_chasing_target_position_timer.start()
+		eyes.show()
+		body.move()
 
 func get_eaten():
+	eat_ghost_sp.play()
 	current_state = GhostState.EATEN
 	body.hide()
 	eyes.show()
@@ -179,6 +200,7 @@ func _on_area_2d_body_entered(body):
 	if current_state == GhostState.RUN_AWAY or current_state == GhostState.BIT_SCARED:
 		get_eaten()
 	elif current_state == GhostState.EATEN: pass
-	else:
+	elif current_state == GhostState.SCATTER or current_state == GhostState.CHASE or current_state == GhostState.START_HOME:
 		update_chasing_target_position_timer.stop()
 		player.die()
+	else: pass

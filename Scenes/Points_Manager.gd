@@ -2,11 +2,12 @@ extends Node
 
 class_name PointsManager
 
+@onready var ui = $"../UI"
+
 var points_for_ghost_eaten = 200
-var score = 0
 
 func pause_on_ghost_eaten():
-	score += points_for_ghost_eaten
+	ui.update_score(points_for_ghost_eaten)
 	points_for_ghost_eaten *= 2
 	
 	get_tree().paused = true

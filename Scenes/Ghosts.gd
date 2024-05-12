@@ -9,6 +9,7 @@ extends Node
 
 func _ready():
 	player.player_died.connect(reset_ghosts)
+	player.player_restart.connect(reset_ghosts)
 
 func reset_ghosts():
 	blinky._ready()
