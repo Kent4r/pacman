@@ -48,6 +48,7 @@ func restart_game():
 	set_physics_process(true)
 	animation_player.play("default")
 	player_restart.emit()
+	lifes+=1
 	ui.update_lifes(1)
 	pellets.restart_pellets()
 	get_tree().create_timer(0.1).timeout.connect(reset_collision)

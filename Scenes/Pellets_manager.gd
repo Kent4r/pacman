@@ -20,6 +20,7 @@ func restart_pellets():
 	var pellets = self.get_children() as Array[Pellet]
 	for pellet in pellets:
 		pellet.restart()
+	_ready()
 
 func _physics_process(delta):
 	if !(ghosts[0].IS_SCARED() or ghosts[1].IS_SCARED() or ghosts[2].IS_SCARED() or ghosts[3].IS_SCARED()):power_pellet_sp.stop()
