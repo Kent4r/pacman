@@ -21,6 +21,7 @@ func restart_pellets():
 	for pellet in pellets:
 		pellet.restart()
 	_ready()
+	pellets_eaten = 0
 
 func _physics_process(delta):
 	if !(ghosts[0].IS_SCARED() or ghosts[1].IS_SCARED() or ghosts[2].IS_SCARED() or ghosts[3].IS_SCARED()):power_pellet_sp.stop()
