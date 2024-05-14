@@ -1,6 +1,7 @@
-[gd_scene load_steps=47 format=3 uid="uid://dfhob25e72cay"]
+[gd_scene load_steps=48 format=3 uid="uid://dfhob25e72cay"]
 
 [ext_resource type="Texture2D" uid="uid://di7lt8ehvdxdh" path="res://Assets/Walls/wall_atlas.png" id="1_6nwsu"]
+[ext_resource type="Script" path="res://Scenes/main.gd" id="1_pv55w"]
 [ext_resource type="Script" path="res://Scenes/TileMap.gd" id="2_2dnlp"]
 [ext_resource type="PackedScene" uid="uid://u1hpwcho4web" path="res://Scenes/pacman.tscn" id="2_cjmn5"]
 [ext_resource type="Script" path="res://Scenes/Pellets_manager.gd" id="3_3mvv3"]
@@ -769,6 +770,7 @@ pattern_2 = SubResource("TileMapPattern_v02ku")
 pattern_3 = SubResource("TileMapPattern_crer0")
 
 [node name="main" type="Node"]
+script = ExtResource("1_pv55w")
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(25, 24)

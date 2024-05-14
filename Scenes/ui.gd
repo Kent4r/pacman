@@ -21,6 +21,9 @@ var game_was_lost: bool = false
 @onready var game_label = %GameLabel
 @onready var restart = $MarginContainer/CenterContainer/Panel/Restart
 
+func _ready():
+	pass
+
 func _physics_process(delta):
 	set_lifes(lifes)
 	set_score(score)

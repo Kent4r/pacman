@@ -1,0 +1,85 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmji148tnkdo3"]
+
+[ext_resource type="Script" path="res://Main menu.gd" id="1_adw6u"]
+[ext_resource type="Theme" uid="uid://be45544wwm4lc" path="res://Scenes/label_theme.tres" id="2_i17y3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vds67"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Main menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_adw6u")
+
+[node name="menu" type="CenterContainer" parent="."]
+
+[node name="Panel" type="Panel" parent="menu"]
+custom_minimum_size = Vector2(1150, 650)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vds67")
+
+[node name="Control" type="Control" parent="menu/Panel"]
+anchors_preset = 0
+offset_left = 96.0
+offset_top = 139.0
+offset_right = 136.0
+offset_bottom = 179.0
+
+[node name="PacmanSpeed" type="Button" parent="menu/Panel"]
+modulate = Color(1, 0.611765, 0.964706, 1)
+texture_filter = 1
+layout_mode = 0
+offset_left = 54.0
+offset_top = 32.0
+offset_right = 518.0
+offset_bottom = 94.0
+theme = ExtResource("2_i17y3")
+text = "pacman speed"
+
+[node name="GhostSpeed" type="Button" parent="menu/Panel"]
+modulate = Color(1, 0.611765, 0.964706, 1)
+texture_filter = 1
+layout_mode = 0
+offset_left = 623.0
+offset_top = 34.0
+offset_right = 1089.0
+offset_bottom = 93.0
+theme = ExtResource("2_i17y3")
+text = "ghosts speed"
+
+[node name="Start" type="Button" parent="menu/Panel"]
+modulate = Color(1, 0.611765, 0.964706, 1)
+texture_filter = 1
+layout_mode = 0
+offset_left = 339.0
+offset_top = 271.0
+offset_right = 787.0
+offset_bottom = 333.0
+theme = ExtResource("2_i17y3")
+theme_override_font_sizes/font_size = 60
+text = "Play!"
+
+[node name="Sounds" type="Button" parent="menu/Panel"]
+modulate = Color(1, 0.611765, 0.964706, 1)
+texture_filter = 1
+layout_mode = 0
+offset_left = 340.0
+offset_top = 512.0
+offset_right = 788.0
+offset_bottom = 574.0
+theme = ExtResource("2_i17y3")
+action_mode = 0
+text = "SOUNDS"
